@@ -1,24 +1,39 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import {Stack} from "expo-router";
+import {MD3DarkTheme, MD3LightTheme, PaperProvider, Text} from "react-native-paper";
+import {useColorScheme} from "react-native";
+import {SQLiteProvider} from 'expo-sqlite';
+import {initDatabase} from '@/utils/dbInit';
+import {Suspense, useEffect} from 'react';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { setNotificationHandler } from 'expo-notifications';
+import { requestNotificationPermission } from "@/utils/notificationsUtils";
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+    shouldShowBanner: false,
+    shouldShowList: false,
+  }),
+});
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const scheme = useColorScheme();
+
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SQLiteProvider databaseName="spending-tracker.db" onInit={initDatabase} useSuspense>
+      <PaperProvider theme={scheme === "dark" ? MD3DarkTheme : MD3LightTheme}>
+        <Suspense fallback={<Text>Loading...</Text>}>
+          <Stack>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+          </Stack>
+        </Suspense>
+      </PaperProvider>
+    </SQLiteProvider>
   );
 }

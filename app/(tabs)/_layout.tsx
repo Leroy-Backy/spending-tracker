@@ -1,35 +1,49 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import {FC} from "react";
+import {Tabs} from "expo-router";
+import {useTheme} from "react-native-paper";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+const TabLayout: FC = () => {
+  const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
+        tabBarStyle: {
+          backgroundColor: theme.colors.surface,
+          borderTopColor: theme.colors.outlineVariant,
+        },
+        headerTintColor: theme.colors.primary,
+        headerStyle: {
+          backgroundColor: theme.colors.surface,
+        }
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'home'} size={28}/>
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name='expenses'
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Expenses",
+          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'money-off'} size={28}/>
+        }}
+      />
+      <Tabs.Screen
+        name='incomes'
+        options={{
+          title: "Incomes",
+          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'attach-money'} size={28}/>
         }}
       />
     </Tabs>
   );
 }
+
+export default TabLayout;
