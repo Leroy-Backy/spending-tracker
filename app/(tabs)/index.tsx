@@ -7,6 +7,7 @@ import { ItemType } from "@/types/types";
 import { View, StyleSheet } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect } from "expo-router";
+import { speak } from "expo-speech";
 
 type CategorySum = {
   name: string,
@@ -59,6 +60,12 @@ export default function Index() {
       FROM items;
     `, date);
     setGeneral(gen);
+
+
+    speak("This month you've spent " + gen?.expense + "złoty and your income was " + gen?.income + " złoty!")
+
+
+    
   });
 
   return (
