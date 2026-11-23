@@ -60,12 +60,7 @@ export default function Index() {
       FROM items;
     `, date);
     setGeneral(gen);
-
-
     speak("This month you've spent " + gen?.expense + "złoty and your income was " + gen?.income + " złoty!")
-
-
-    
   });
 
   return (
