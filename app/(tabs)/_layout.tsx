@@ -25,21 +25,21 @@ const TabLayout: FC = () => {
         name='index'
         options={{
           title: "Home",
-          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'home'} size={28}/>
+          tabBarIcon: ({color}) => <MaterialIcons color={color as string} name={'home'} size={28}/>
         }}
       />
       <Tabs.Screen
         name='expenses'
         options={{
           title: "Expenses",
-          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'money-off'} size={28}/>
+          tabBarIcon: ({color}) => <MaterialIcons color={color as string} name={'money-off'} size={28}/>
         }}
       />
       <Tabs.Screen
         name='incomes'
         options={{
           title: "Incomes",
-          tabBarIcon: ({color}) => <MaterialIcons color={color} name={'attach-money'} size={28}/>
+          tabBarIcon: ({color}) => <MaterialIcons color={color as string} name={'attach-money'} size={28}/>
         }}
       />
     </Tabs>

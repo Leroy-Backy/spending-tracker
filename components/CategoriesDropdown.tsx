@@ -1,6 +1,6 @@
 import { Category } from "@/types/types";
 import { useSQLiteContext } from "expo-sqlite";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { View, StyleSheet, Keyboard } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -15,12 +15,9 @@ const CategoriesDropdown: FC<CategoriesDropdownProps> = ({value, onChange}) => {
   const theme = useTheme();
   const db = useSQLiteContext();
 
-  const [categories, setCategories] = useState<Category[]>([]);
-  
-  useEffect(() => {
-    const res = db.getAllSync<Category>(`select * from category`);
-    setCategories(res);
-  }, []);
+  const [categories] = useState<Category[]>(() =>
+    db.getAllSync<Category>(`select * from category`)
+  );
 
   //TODO fix selected item background
 

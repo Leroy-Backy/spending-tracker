@@ -72,7 +72,7 @@ const ItemsList: FC<{ type: ItemType }> = ({ type }) => {
         <TransactionItemComponent key={item.id} item={item} />
       )}
       ListFooterComponent={
-        loading ? <Text>Loading...</Text> : null
+        loading ? <Text>Loading...</Text> : undefined
       }
     />
   );

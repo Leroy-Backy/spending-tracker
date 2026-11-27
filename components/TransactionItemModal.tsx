@@ -128,7 +128,7 @@ const TransactionItemModal: FC<Props> = ({ type }) => {
           </Dialog.Content>
 
           <Dialog.Actions>
-            <Button onPress={handleSubmit(saveItem, setErrors)}>Save</Button>
+            <Button onPress={() => handleSubmit(saveItem, setErrors)()}>Save</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
