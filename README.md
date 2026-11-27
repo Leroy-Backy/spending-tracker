@@ -1,26 +1,56 @@
-# Welcome to your Expo app 👋
+# Aplikacja mobilna do ewidencji wydatków i dochodów
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikacja mobilna (React Native + Expo) do rejestrowania wydatków i dochodów w podziale na kategorie,
+z miesięcznym podsumowaniem, powiadomieniami i głosowym odczytem salda. Dane przechowywane są lokalnie
+w bazie SQLite na urządzeniu.
 
-## Get started
+## Wymagania
 
-1. Install dependencies
+- [Node.js](https://nodejs.org/) (wersja LTS)
+- [Yarn](https://yarnpkg.com/)
+- Telefon z systemem **Android** lub **iOS** z zainstalowaną aplikacją **Expo Go**
+  (Google Play / App Store, https://expo.dev/go)
+
+## Uruchomienie
+
+1. Zainstaluj zależności:
 
    ```bash
-   npm install
+   yarn install
    ```
 
-2. Start the app
+2. Uruchom serwer deweloperski Expo:
 
    ```bash
-   npx expo start
+   yarn start
    ```
 
-In the output, you'll find options to open the app in a
+   Polecenie uruchamia `expo start --tunnel`, więc telefon nie musi być w tej samej sieci co komputer.
+   Przy pierwszym uruchomieniu Expo może poprosić o zgodę na instalację pakietu `@expo/ngrok` – należy ją potwierdzić.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+3. Otwórz aplikację na telefonie:
+   - **Android** – otwórz Expo Go i zeskanuj kod QR wyświetlony w terminalu,
+   - **iOS** – zeskanuj kod QR aparatem telefonu i otwórz link w Expo Go.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+4. Przy pierwszym uruchomieniu zezwól aplikacji na wysyłanie powiadomień.
+
+## Budowanie aplikacji (Android i iOS)
+
+Aplikację można zbudować zarówno na **Androida**, jak i na **iOS** przy pomocy usługi EAS Build
+(konfiguracja w pliku `eas.json`). Wymagane jest konto Expo, a w przypadku iOS – konto Apple Developer.
+
+```bash
+npx eas login                      # logowanie do konta Expo
+npx eas build --platform android   # build na Androida
+npx eas build --platform ios       # build na iOS
+npx eas build --platform all       # build na obie platformy
+```
+
+Gotowe buildy są dostępne na stronie https://expo.dev w sekcji „Builds”.
+
+## Struktura projektu
+
+- `app/` – ekrany aplikacji (ekran główny, wydatki, dochody) i nawigacja
+- `components/` – komponenty interfejsu (formularz transakcji, lista transakcji, wybór kategorii)
+- `types/` – definicje typów TypeScript
+- `utils/` – inicjalizacja bazy danych i obsługa powiadomień
